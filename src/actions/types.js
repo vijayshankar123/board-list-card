@@ -1,0 +1,10 @@
+export const ADD_BOARD = "ADD_BOARD";
+export const ADD_LIST = "ADD_LIST";
+export const ADD_CARD = "ADD_CARD";
+export const SET_CURRENT_CARD = "SET_CURRENT_CARD";
+export const SET_CURRENT_LIST = "SET_CURRENT_LIST";
+export const DELETE_LIST = "DELETE_LIST";
+export const DELETE_CARD = "DELETE_CARD";
+export const UPDATE_CARD = "UPDATE_CARD";
+export const UPDATE_LIST = "UPDATE_LIST";
+//export const ADD_BOARD = "ADD_BOARD";
