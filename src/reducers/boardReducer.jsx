@@ -7,7 +7,9 @@ import {
   DELETE_CARD,
   UPDATE_CARD,
   SET_CURRENT_LIST,
-  UPDATE_LIST
+  UPDATE_LIST,
+  REARRANGE,
+  REARRANGEC
 } from "../actions/types";
 
 const initialState = {
@@ -78,7 +80,24 @@ export default function(state = initialState, action) {
         card: state.card.filter(item => item.cardId !== action.payload),
         loading: false
       };
+    case REARRANGE:
+      return {
+        ...state,
+        list: action.payload,
+        loading: false
+      };
+    case REARRANGEC:
+      return {
+        ...state,
+        card: action.payload,
+        loading: false
+      };
     default:
       return state;
   }
 }
+/*state.list.splice(
+          action.payload.rearr.end,
+          0,
+          state.list.splice(action.payload.rearr.start, 1)[0]
+        ),*/

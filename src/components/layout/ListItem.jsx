@@ -5,7 +5,8 @@ import {
   addCard,
   deleteList,
   setList,
-  updateList
+  updateList,
+  rearrange
 } from "../../actions/boardAction";
 import CardItem from "./CardItem";
 import uuid from "uuid";
@@ -16,7 +17,8 @@ const ListItem = ({
   deleteList,
   item,
   addCard,
-  board
+  board,
+  rearrange
 }) => {
   const [model, setModel] = useState(false);
   const [card, setCard] = useState({
@@ -55,9 +57,44 @@ const ListItem = ({
 
   const cardId = uuid.v4();
 
+  const onDragStart = (e, id) => {
+    e.dataTransfer.setData("id", item.id);
+  };
+
+  const onDrop = (e, id) => {
+    const data = e.dataTransfer.getData("id");
+    const content = board.list.filter(item => item.id === data);
+    const contentIndex = board.list.findIndex(item => item.id === data);
+
+    const contentDropIndex = board.list.findIndex(item => item.id === id);
+
+    const contentDrop = board.list.filter(item => item.id === id);
+    board.list.splice(
+      contentDropIndex,
+      0,
+      board.list.splice(contentIndex, 1)[0]
+    );
+    rearrange(board.list);
+  };
+  const onDragOver = e => {
+    e.preventDefault();
+  };
   return (
     <div>
-      <div className="card cardq" style={{ float: "left" }}>
+      <div
+        draggable
+        onDragStart={e => {
+          onDragStart(e, item.id);
+        }}
+        onDragOver={e => {
+          onDragOver(e);
+        }}
+        onDrop={e => {
+          onDrop(e, item.id);
+        }}
+        className="card cardq"
+        style={{ float: "left" }}
+      >
         <p>
           <Link
             onClick={e => {
@@ -179,5 +216,6 @@ export default connect(mapStatetToProps, {
   updateList,
   setList,
   deleteList,
-  addCard
+  addCard,
+  rearrange
 })(ListItem);

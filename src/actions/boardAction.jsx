@@ -7,7 +7,9 @@ import {
   DELETE_CARD,
   UPDATE_CARD,
   SET_CURRENT_LIST,
-  UPDATE_LIST
+  UPDATE_LIST,
+  REARRANGE,
+  REARRANGEC
 } from "./types";
 import uuid from "uuid";
 
@@ -88,6 +90,24 @@ export const deleteCard = id => {
     dispatch({
       type: DELETE_CARD,
       payload: id
+    });
+  };
+};
+
+export const rearrange = rearr => {
+  return dispatch => {
+    dispatch({
+      type: REARRANGE,
+      payload: rearr
+    });
+  };
+};
+
+export const rearrangec = rearr => {
+  return dispatch => {
+    dispatch({
+      type: REARRANGEC,
+      payload: rearr
     });
   };
 };

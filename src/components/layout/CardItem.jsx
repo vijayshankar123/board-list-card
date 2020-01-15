@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { setCards, deleteCard, updateCard } from "../../actions/boardAction";
+import {
+  setCards,
+  deleteCard,
+  updateCard,
+  rearrangec
+} from "../../actions/boardAction";
 import { Link } from "react-router-dom";
 
-const CardItem = ({ updateCard, deleteCard, board, cards, setCards }) => {
+const CardItem = ({
+  rearrangec,
+  updateCard,
+  deleteCard,
+  board,
+  cards,
+  setCards
+}) => {
   const [model, setModel] = useState(false);
   const [card, setCard] = useState({
     nameq: "",
@@ -44,9 +56,47 @@ const CardItem = ({ updateCard, deleteCard, board, cards, setCards }) => {
     setCard("");
   };
 
+  const onDragStart = (e, id) => {
+    e.dataTransfer.setData("sid", id);
+  };
+
+  const onDrop = (e, id) => {
+    const itemData = e.dataTransfer.getData("id");
+    if (cards.id === itemData) {
+      const data = e.dataTransfer.getData("sid");
+
+      const content = board.card.find(item => item.cardId == data);
+      const contentIndex = board.card.findIndex(item => item.cardId === data);
+
+      const contentDropIndex = board.card.findIndex(item => item.cardId === id);
+
+      const contentDrop = board.card.find(item => item.cardId === id);
+
+      const itemOne = board.card.splice(contentIndex, 1, contentDrop)[0];
+      board.card.splice(contentDropIndex, 1, itemOne);
+      rearrangec(board.card);
+    }
+  };
+
+  const onDragOver = e => {
+    e.preventDefault();
+  };
+
   return (
     <div>
-      <div className="card cardelement">
+      <div
+        draggable
+        onDragStart={e => {
+          onDragStart(e, cards.cardId);
+        }}
+        onDragOver={e => {
+          onDragOver(e);
+        }}
+        onDrop={e => {
+          onDrop(e, cards.cardId);
+        }}
+        className="card cardelement"
+      >
         <p>
           <span style={{ float: "left" }}>
             <Link
@@ -117,6 +167,9 @@ const mapStateToProps = state => ({
   board: state.board
 });
 
-export default connect(mapStateToProps, { updateCard, deleteCard, setCards })(
-  CardItem
-);
+export default connect(mapStateToProps, {
+  rearrangec,
+  updateCard,
+  deleteCard,
+  setCards
+})(CardItem);

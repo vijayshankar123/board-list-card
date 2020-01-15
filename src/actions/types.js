@@ -7,4 +7,6 @@ export const DELETE_LIST = "DELETE_LIST";
 export const DELETE_CARD = "DELETE_CARD";
 export const UPDATE_CARD = "UPDATE_CARD";
 export const UPDATE_LIST = "UPDATE_LIST";
+export const REARRANGE = "REARRANGE";
+export const REARRANGEC = "REARRANGEC";
 //export const ADD_BOARD = "ADD_BOARD";

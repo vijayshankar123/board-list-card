@@ -59,7 +59,7 @@ body {
 .overlay {
   position: fixed;
   width: 500px;
-  z-index: 1;
+  z-index: 2;
   background-color: khaki;
   /* Specify a stack order in case you're using a different order for other elements */
   /* Add a pointer on hover */

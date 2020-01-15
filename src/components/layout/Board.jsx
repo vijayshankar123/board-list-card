@@ -53,6 +53,7 @@ const Board = ({ board: { board, list }, addList }) => {
                     id
                   };
                   addList(adList);
+                  console.log(list);
                   setListe("");
                 }}
                 type="button"
